@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Atomic View Mansa PRO</title>
+</head>
+<body>
+    <h2>📸 Atomic View Mansa – Interface IA</h2>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <label>Pair:</label>
+        <select name="pair">
+            <option value="XAUUSD">XAUUSD</option>
+            <option value="NAS100">NAS100</option>
+            <option value="US30">US30</option>
+        </select><br><br>
+
+        <label>Timeframe:</label>
+        <select name="timeframe">
+            <option value="H1">H1</option>
+            <option value="H4">H4</option>
+        </select><br><br>
+
+        <input type="file" name="screenshot" required><br><br>
+        <button type="submit">Analyser</button>
+    </form>
+
+    <div id="result" style="margin-top:20px;"></div>
+
+    <script>
+        const form = document.getElementById('uploadForm');
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const response = await fetch('/analyse', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+            document.getElementById('result').innerText = data.result || data.error;
+        };
+    </script>
+</body>
+</html>
